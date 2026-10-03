@@ -2,10 +2,26 @@ services:
   - type: web
     name: baati-n-beyond-api
     runtime: node
-    buildCommand: npm install
-    startCommand: node server.mjs
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     envVars:
+      - key: VITE_API_URL
+        value: https://baati-nd-beyond.onrender.com
+      - key: VITE_FIREBASE_API_KEY
+        value: AIzaSyDDyIu15hND02eQ5k6un2uFo5GzxuNuZDQ
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        value: baati-n-beyond.firebaseapp.com
+      - key: VITE_FIREBASE_PROJECT_ID
+        value: baati-n-beyond
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        value: baati-n-beyond.firebasestorage.app
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        value: "1041514648150"
+      - key: VITE_FIREBASE_APP_ID
+        value: "1:1041514648150:web:e893414251a8b66d3e21f7"
+      - key: VITE_FIREBASE_MEASUREMENT_ID
+        value: G-4HBKEX421Q
       - key: REDIS_URL
         sync: false
       - key: FRONTEND_URL
-        sync: false
+        value: https://baati-nd-beyond.onrender.com

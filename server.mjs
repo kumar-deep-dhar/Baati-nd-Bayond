@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import Redis from 'ioredis';
+import path from 'node:path';
 
 const app = express();
 const port = Number(process.env.PORT || process.env.API_PORT || 3001);
@@ -44,6 +45,12 @@ app.delete('/api/cache/products', async (_req, res) => {
   if (!redis) return res.json({ cleared: false });
   try { await redis.del(cacheKey); res.json({ cleared: true }); }
   catch { res.status(503).json({ cleared: false, error: 'Redis unavailable' }); }
+});
+
+app.use(express.static(path.resolve('dist')));
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api/')) return res.sendFile(path.resolve('dist/index.html'));
+  next();
 });
 
 app.listen(port, () => console.log(`Baati API listening on http://localhost:${port}`));
