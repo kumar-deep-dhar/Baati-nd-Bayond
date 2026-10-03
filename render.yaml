@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: baati-n-beyond-api
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.mjs
+    envVars:
+      - key: REDIS_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

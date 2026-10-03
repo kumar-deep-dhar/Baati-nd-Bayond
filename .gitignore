@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+!.env.local.example
+!.env.production.example
+.DS_Store
+firebase-debug.log
+.codex/
+.ppt-build/
+presentation-output/
