@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { getAnalytics, isSupported } from 'firebase/analytics';
 import { collection, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore';
 
 const config = {
@@ -8,7 +9,8 @@ const config = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 const firebaseEnabled = Object.values(config).every(Boolean);
 const apiBase = import.meta.env.VITE_API_URL || '';
@@ -52,6 +54,7 @@ if (firebaseEnabled) {
   const app = initializeApp(config);
   db = getFirestore(app);
   auth = getAuth(app);
+  if (config.measurementId) isSupported().then(supported => { if (supported) getAnalytics(app); }).catch(() => {});
   onAuthStateChanged(auth, user => { cloud.user = user; window.dispatchEvent(new CustomEvent('baati-auth-changed', { detail: user })); });
   cloud.loadProducts().catch(error => console.warn('Firebase product sync unavailable:', error));
 }
