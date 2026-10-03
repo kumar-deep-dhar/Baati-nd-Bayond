@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "api": "node server.mjs",
+    "start": "node server.mjs",
     "dev:full": "concurrently -k \"npm run api\" \"npm run dev\"",
     "build": "vite build",
     "preview": "vite preview"
